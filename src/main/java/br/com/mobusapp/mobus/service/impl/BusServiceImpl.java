@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class BusServiceImpl implements BusService {
+
     @Autowired
     private BusDao dao;
 
@@ -25,7 +26,7 @@ public class BusServiceImpl implements BusService {
         bus.setLatitude(lat);
         bus.setLongitude(lng);
         dao.save(bus);
-        System.out.println("PAROU");
+        System.out.println(bus);
     }
 
     @Override

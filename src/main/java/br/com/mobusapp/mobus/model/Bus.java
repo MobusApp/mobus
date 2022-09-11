@@ -1,5 +1,6 @@
 package br.com.mobusapp.mobus.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "TB_BUS")
 public class Bus {

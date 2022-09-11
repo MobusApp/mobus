@@ -1,5 +1,6 @@
 package br.com.mobusapp.mobus.controller;
 
+import br.com.mobusapp.mobus.dao.BusDao;
 import br.com.mobusapp.mobus.model.Bus;
 import br.com.mobusapp.mobus.model.dto.PayloadDTO;
 import br.com.mobusapp.mobus.service.BusService;
@@ -28,14 +29,9 @@ public class BusLocalizationController {
         System.out.println(lng);
     }
 
-    @GetMapping("RetrieveGPS")
+    @GetMapping("RetrieveAllGPS")
     public PayloadDTO retrieveGPS(@RequestParam String id){
-        PayloadDTO payloadDTO = new PayloadDTO();
-        Bus bus = service.findById(id);
-        payloadDTO.setMessage("Dados resgatados com sucesso!");
-        payloadDTO.setStatus(HttpStatus.OK);
-        payloadDTO.setObject(bus);
-        return payloadDTO;
+        return null;
     }
 
 }

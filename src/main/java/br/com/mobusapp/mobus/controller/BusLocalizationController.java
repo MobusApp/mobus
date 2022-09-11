@@ -1,7 +1,7 @@
 package br.com.mobusapp.mobus.controller;
 
+import br.com.mobusapp.mobus.model.Bus;
 import br.com.mobusapp.mobus.model.dto.BusDTO;
-import br.com.mobusapp.mobus.model.dto.PayloadDTO;
 import br.com.mobusapp.mobus.service.BusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +21,9 @@ import java.util.List;
 public class BusLocalizationController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(BusLocalizationController.class);
+
+    public static List<BusDTO> listaEstatica = new ArrayList<>();
+    public static Integer integer = 0;
 
     @Autowired
     private BusService service;
@@ -36,29 +40,36 @@ public class BusLocalizationController {
     }
 
     @GetMapping("RetrieveAllGPS")
-    public PayloadDTO RetrieveAllGPS(HttpServletResponse response) {
+    public List<BusDTO> retrieveAllGPS(HttpServletResponse response) {
         try{
-            List<BusDTO> buses = service.findAll();
-            return PayloadDTO.returnSuccess("Dados resgatados com sucesso!",buses);
+            return service.findAll();
         }catch (Exception e){
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             LOGGER.error(e.getMessage(),e);
-            return PayloadDTO.returnError(response,HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Ocorreu um erro ao buscar os dados: " + e.getMessage());
+            return null;
         }
     }
 
     @GetMapping("RetrieveGPS")
-    public PayloadDTO RetrieveGPS(HttpServletResponse response, @RequestParam String id) {
-        PayloadDTO payloadDTO = new PayloadDTO();
+    public BusDTO retrieveGPS(HttpServletResponse response, @RequestParam String id) {
         try {
-            payloadDTO.setMessage("Dados resgatados com sucesso!");
-            BusDTO bus = service.findById(id);
-            payloadDTO.setObj(bus);
-            return payloadDTO;
+            if(listaEstatica.size() == 0){
+                listaEstatica = service.findAll();;
+            }
+            BusDTO retorno = listaEstatica.get(integer);
+            integer++;
+            if(integer > 2){
+                integer = 0;
+            }
+            return retorno;
+
+
+
+//            return service.findById(id);
         } catch (Exception e) {
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             LOGGER.error(e.getMessage(),e);
-            return PayloadDTO.returnError(response,HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Ocorreu um erro ao buscar a localização: " + e.getMessage());
+            return null;
         }
     }
 

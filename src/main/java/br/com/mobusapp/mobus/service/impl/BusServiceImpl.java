@@ -13,14 +13,14 @@ public class BusServiceImpl implements BusService {
 
     public static List<Bus> busList = new ArrayList<>();
 
-    static {
-        Bus bus = new Bus();
-        bus.setId("1234");
-        bus.setMacAddress("TE:ST:EM:AC:01");
-        bus.setLatitude("-23.459006");
-        bus.setLongitude("-47.419220");
-        busList.add(bus);
-    }
+//    static {
+//        Bus bus = new Bus();
+//        bus.setId("1234");
+//        bus.setMacAddress("TE:ST:EM:AC:01");
+//        bus.setLatitude("-23.459006");
+//        bus.setLongitude("-47.419220");
+//        busList.add(bus);
+//    }
 
 
     @Override
